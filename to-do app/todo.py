@@ -43,8 +43,21 @@ def save_list():
             file.write(task + "\n")
 
 
+def load_list():
+    """function for loading a saved list on program start"""
+    try:
+        with open("todo-list.txt", "r", encoding="utf-8") as file:
+            for line in file:
+                task_list.append(line.strip())
+    except FileNotFoundError:
+        print("\nSave not found\n")
+
+
 def main():
     """main app function"""
+
+    load_list()
+
     while True:
         choice = input(
             "Welcome to the To-Do list!\n"
