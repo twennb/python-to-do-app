@@ -31,8 +31,17 @@ def view_tasks():
 
 def exit_program():
     """function to exit the app"""
-    print("\nExiting the program...\n")
-    sys.exit()
+    ask_save = input("\nDo you want to save before exiting (yes/no): ")
+
+    if ask_save == "yes":
+        save_list()
+        print("\nExiting the program...\n")
+        sys.exit()
+    elif ask_save == "no":
+        print("\nExiting the program...\n")
+        sys.exit()
+    else:
+        print("\nInvalid input!\n")
 
 
 def save_list():
