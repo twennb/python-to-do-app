@@ -19,7 +19,11 @@ def add_task(task):
 
 def remove_task(task):
     """function to remove tasks from list"""
-    print(f"\nRemoving task '{task}'\n")
+    try:
+        task_list.remove(task)
+        print(f"\nRemoving task '{task}'\n")
+    except ValueError:
+        print(f"\nNo task '{task}' found to remove..\n")
 
 
 def view_tasks():
@@ -48,9 +52,11 @@ def main():
         choice = choice.lower()
         match(choice.strip()):
             case "add":
-                add_task(choice)
+                to_add = input("\nWhat task do you want to add: ")
+                add_task(to_add)
             case "remove":
-                remove_task(choice)
+                to_remove = input("\nWhat task do you want to remove: ")
+                remove_task(to_remove)
             case "view":
                 view_tasks()
             case "exit":
