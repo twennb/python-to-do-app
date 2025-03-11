@@ -13,6 +13,7 @@ task_list = []
 
 def add_task(task):
     """function to add tasks to list"""
+    task_list.append(task)
     print(f"\nAdding task '{task}'\n")
 
 
