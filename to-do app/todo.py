@@ -1,12 +1,8 @@
 """A simple CLI based to-do list app"""
-# Features:
-#  Add task
-#  Remove task
-#  View tasks
-#  Exit program
-#
-#  app should be constantly prompting the user for input
-#  until they choose to exit the app
+# Adding file handling to locally save the list
+# in a .txt file.
+# Adding function to load saved file on program start to
+# import the saved list items.
 
 import sys
 
@@ -39,6 +35,14 @@ def exit_program():
     sys.exit()
 
 
+def save_list():
+    """function for locally saving list between sessions"""
+    print("\nSaving list...\n")
+    with open("todo-list.txt", "w", encoding="utf-8") as file:
+        for task in task_list:
+            file.write(task + "\n")
+
+
 def main():
     """main app function"""
     while True:
@@ -48,6 +52,7 @@ def main():
             "'add' to add a task\n"
             "'remove' to remove a task\n"
             "'view' to see your tasks\n"
+            "'save' to save your list\n"
             "'exit' to close the app\n"
             "What would you like to do: "
         )
@@ -64,6 +69,8 @@ def main():
                 view_tasks()
             case "exit":
                 exit_program()
+            case "save":
+                save_list()
             case _:
                 print("\nInvalid command, try again!\n")
 
