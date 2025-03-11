@@ -54,3 +54,5 @@ def main():
                 view_tasks()
             case "exit":
                 exit_program()
+            case _:
+                print("Invalid command, try again!\n")
