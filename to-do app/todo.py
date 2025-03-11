@@ -55,4 +55,8 @@ def main():
             case "exit":
                 exit_program()
             case _:
-                print("Invalid command, try again!\n")
+                print("\nInvalid command, try again!\n")
+
+
+if __name__ == "__main__":
+    main()
