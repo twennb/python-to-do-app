@@ -8,6 +8,8 @@
 #  app should be constantly prompting the user for input
 #  until they choose to exit the app
 
+import sys
+
 task_list = []
 
 
@@ -34,6 +36,7 @@ def view_tasks():
 def exit_program():
     """function to exit the app"""
     print("\nExiting the program...\n")
+    sys.exit()
 
 
 def main():
