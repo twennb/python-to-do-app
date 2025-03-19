@@ -88,10 +88,9 @@ def main():
             "'save' to save your list\n"
             "'exit' to close the app\n"
             "What would you like to do: "
-        )
+        ).lower().strip()
 
-        choice = choice.lower()
-        match(choice.strip()):
+        match(choice):
             case "add":
                 task_list.add_task()
             case "remove":
