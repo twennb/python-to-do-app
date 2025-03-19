@@ -6,70 +6,81 @@
 
 import sys
 
-task_list = []
 
+class ToDoList:
+    """class to handle the task list and related methods"""
 
-def add_task(task):
-    """function to add tasks to list"""
-    task_list.append(task)
-    print(f"\nAdding task '{task}'\n")
+    def __init__(self):
+        self.tasks = []
 
+    def add_task(self):
+        """method to add tasks to list"""
+        to_add = input("\nWhat task do you want to add: ")
+        self.tasks.append(to_add)
+        print(f"Adding task '{to_add}'\n")
 
-def remove_task(task):
-    """function to remove tasks from list"""
-    try:
-        task_list.remove(task)
-        print(f"\nRemoving task '{task}'\n")
-    except ValueError:
-        print(f"\nNo task '{task}' found to remove..\n")
+    def remove_task(self):
+        """method to remove tasks from list"""
+        to_remove = input("\nWhat task do you want to remove: ")
+        try:
+            self.tasks.remove(to_remove)
+            print(f"Removing task '{to_remove}'\n")
+            return
+        except ValueError:
+            print(f"Invalid input! No task {to_remove} found to remove..")
 
+    def view_tasks(self):
+        """method to view tasks currently in list"""
+        if not self.tasks:
+            print("\nNo tasks to show!\n")
+        else:
+            print("\nCurrent tasks: ")
+            for index, item in enumerate(self.tasks, start=1):
+                print(f"{index}. {item}")
 
-def view_tasks():
-    """function to view tasks currently in list"""
-    print(f"\nCurrent tasks: {task_list}\n")
+    def save_list(self):
+        """method for locally saving list between sessions"""
+        print("\nSaving list...\n")
+        with open("todo-list.txt", "w", encoding="utf-8") as file:
+            for task in self.tasks:
+                file.write(task + "\n")
 
+    def load_list(self):
+        """method for loading a saved list on program start"""
+        try:
+            with open("todo-list.txt", "r", encoding="utf-8") as file:
+                for line in file:
+                    self.tasks.append(line.strip())
+        except FileNotFoundError:
+            print("\nSave not found\n")
 
-def exit_program():
-    """function to exit the app"""
-    ask_save = input("\nDo you want to save before exiting (yes/no): ")
+    def exit_program(self):
+        """method to exit the app"""
 
-    if ask_save == "yes":
-        save_list()
-        print("\nExiting the program...\n")
-        sys.exit()
-    elif ask_save == "no":
-        print("\nExiting the program...\n")
-        sys.exit()
-    else:
-        print("\nInvalid input!\n")
+        while True:
+            ask_save = input("\nDo you want to save before exiting (yes/no): ")
 
-
-def save_list():
-    """function for locally saving list between sessions"""
-    print("\nSaving list...\n")
-    with open("todo-list.txt", "w", encoding="utf-8") as file:
-        for task in task_list:
-            file.write(task + "\n")
-
-
-def load_list():
-    """function for loading a saved list on program start"""
-    try:
-        with open("todo-list.txt", "r", encoding="utf-8") as file:
-            for line in file:
-                task_list.append(line.strip())
-    except FileNotFoundError:
-        print("\nSave not found\n")
+            if ask_save == "yes":
+                self.save_list()
+                print("\nExiting the program...\n")
+                sys.exit()
+            elif ask_save == "no":
+                print("\nExiting the program...\n")
+                sys.exit()
+            else:
+                print("\nInvalid input!\n")
 
 
 def main():
     """main app function"""
 
-    load_list()
+    task_list = ToDoList()
+
+    task_list.load_list()
 
     while True:
         choice = input(
-            "Welcome to the To-Do list!\n"
+            "\nWelcome to the To-Do list!\n"
             "You can type:\n"
             "'add' to add a task\n"
             "'remove' to remove a task\n"
@@ -82,17 +93,15 @@ def main():
         choice = choice.lower()
         match(choice.strip()):
             case "add":
-                to_add = input("\nWhat task do you want to add: ")
-                add_task(to_add)
+                task_list.add_task()
             case "remove":
-                to_remove = input("\nWhat task do you want to remove: ")
-                remove_task(to_remove)
+                task_list.remove_task()
             case "view":
-                view_tasks()
+                task_list.view_tasks()
             case "exit":
-                exit_program()
+                task_list.exit_program()
             case "save":
-                save_list()
+                task_list.save_list()
             case _:
                 print("\nInvalid command, try again!\n")
 
